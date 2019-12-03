@@ -23,6 +23,7 @@ var nombreColores = ['White', 'LightYellow',
 let paleta = document.getElementById('paleta');
 let grillaPixeles = document.getElementById('grilla-pixeles');
 let indicadorDeColor = document.getElementById('indicador-de-color');
+let mouseButtonDown = false;
 
 function crearColores() {
   for(const prop in nombreColores ){
@@ -45,6 +46,11 @@ function crearGrilla() {
     div.addEventListener( "click", function() {
       actualizarColor(div, indicadorDeColor.style.backgroundColor);
     });
+    div.addEventListener("mouseenter", function(){
+      if(mouseButtonDown){
+        actualizarColor(div, indicadorDeColor.style.backgroundColor);
+      }
+    });
 
     grillaPixeles.appendChild(div);
   }
@@ -59,7 +65,7 @@ colorPersonalizado.addEventListener('change',
     // Se guarda el color de la rueda en colorActual
     colorActual = colorPersonalizado.value;
     // Completar para que cambie el indicador-de-color al colorActual
-    actualizarColor(colorPersonalizado, colorActual);
+    actualizarColor(indicadorDeColor, colorActual);
 
   })
 );
@@ -68,7 +74,19 @@ function actualizarColor(pixel, pincel){
   pixel.style.backgroundColor = pincel;
 }
 
+function checkMouseButton(){
+
+  document.body.addEventListener('mousedown', function(){
+    mouseButtonDown = true;
+  });
+
+  document.body.addEventListener('mouseup', function(){
+    mouseButtonDown = false;
+  });
+}
+
 $(document).ready( function() {
   crearColores();
   crearGrilla();
+  checkMouseButton();
 });
