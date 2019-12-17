@@ -40,7 +40,7 @@ function crearColores() {
 }
 
 function crearGrilla() {
-  for(var i = 0 ; i <= 1750; i++) {
+  for(var i = 0 ; i <= 1749; i++) {
     let div = document.createElement("div");
 
     div.addEventListener( "click", function() {
@@ -85,8 +85,55 @@ function checkMouseButton(){
   });
 }
 
+function borrarGrilla() {
+  let elementosABorrar = grillaPixeles.children;
+
+  for (let i = 0; i < elementosABorrar.length; i++ ) {
+    $(elementosABorrar[i]).animate({backgroundColor: 'white'}, 1000);
+  }
+}
+
+function dibujosSuperHeroes(){
+  let dibujos = $('li img');
+
+  for (let i = 0 ; i < dibujos.length ; i++) {
+    dibujos[i].addEventListener('click', function (){
+      let pixelMap;
+
+      switch(this.id){
+        case "batman":
+          pixelMap = batman;
+          break;
+        case "wonder":
+          pixelMap = wonder;
+          break;
+        case "flash":
+          pixelMap = flash;
+          break;
+        case "invisible":
+          pixelMap = invisible;
+          break;
+      }
+
+      cargarSuperheroe(pixelMap)
+    });
+  }
+}
+
+function guardarDibujo() {
+  let botonGuardar = document.getElementById('guardar');
+
+  botonGuardar.addEventListener('click', guardarPixelArt );
+}
+
 $(document).ready( function() {
   crearColores();
   crearGrilla();
   checkMouseButton();
+  dibujosSuperHeroes();
+  guardarDibujo()
+
+  document.getElementById('borrar').addEventListener('click', function(){
+    borrarGrilla();
+  });
 });
